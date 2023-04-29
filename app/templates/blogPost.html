@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title%}Blawgs{% endblock title%}
+
+{% block content %}
+    <div class="">
+        <div class="posts glass  w-[100%] my-4">
+            <div class="title text-black p-9">
+                <h1>{{post.title}}</h1>
+                <p>{{post.date}}</p>
+                <hr>
+                <p>{{post.body}}</p>
+            </div>
+            <div  class="border-0 bg-slate-500 w-[100%] px-2">
+                <p>comments goes here</p>
+            </div>
+            <div>
+                <input type="text" class="border-0 bg-black w-[100%]">
+            </div>
+        </div>
+        
+    </div>
+    
+{% endblock content %}

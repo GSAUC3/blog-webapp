@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tailwind_tags %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="post" class="glass-1 p-4">  
+            <fieldset class="form-group ">
+                <legend>Delete Post</legend>
+                {% csrf_token %}
+                <p>Your sure you want to delete? "{{ object.title}}"</p>
+                <p>Vebe dakhechoo kiiiii?</p>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="w-full my-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                <a href="{% url 'post-detail' object.id %}"><div class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Cancel</div></a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

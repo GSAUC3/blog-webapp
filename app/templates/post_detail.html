@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title%}Blawgs{% endblock title%}
+
+{% block content %}
+    <div class="m-4">
+        <div class="main glass w-[100%]" style="margin-top:8px">
+            <div class="title text-black p-9">
+                <div class="flex items-center">
+                    <img class="rounded m-2" style="height:50px" src="{{object.author.profile.image.url}}" alt="">
+                    <p class="text-2xl text-purple-400">
+                        {{object.title}}
+                    </p>
+                </div>
+                
+                <div class="flex justify-between">
+                    <p class="text-xs text-cyan-300"><a class="hover:underline" href="{% url 'user-post' post.author.username %}">
+                        @{{object.author}} </a></p>
+                    <p class="text-xs text-lime-400" >{{object.date_posted | date:"F d, Y"}}</p>
+                </div>
+                
+                <hr class="mb-4">
+                <p>{{object.content}}</p>
+                <hr class="my-4">
+                <div>
+                    {% if object.author == user %}
+                    {% comment %} this condition will make sure that only the author who has logged in 
+                    can modify the post  {% endcomment %}
+                    <a class="text-green-300 my-6 hover:underline" href="{% url 'post-update' object.id %}">Update</a>
+                    <a class="text-red-600 my-6 hover:underline" href="{% url 'post-delete' object.id %}">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}

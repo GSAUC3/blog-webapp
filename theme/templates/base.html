@@ -1,0 +1,71 @@
+{% load static tailwind_tags %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock title %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+    <style>
+            
+   
+      {% block css %}{% endblock css %}
+    </style>
+    <link rel="stylesheet" href="{% static 'css/dist/base.css' %}" />
+    {% comment %} {% block style %}{% endblock style %} {% endcomment %}
+  </head>
+
+  <body class="bg-gradient-to-r from-cyan-500 to-blue-500">
+    <div id="main-body" class="flex z-10 bg-slate-800 box-border  h-[95vh] relative">
+      <nav
+        class="z-20 top-0 w-[100%] p-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 fixed" 
+      >
+        <div class="flex justify-evenly w-[100%]">
+          <li class="list-none hover:scale-125 hover:rotate-6"><a href="/">Home</a></li>
+          <li class="list-none hover:scale-125 hover:rotate-6"><a href="{% url 'about' %}">About</a></li>
+            {% if user.is_authenticated  %}
+            <li class="list-none hover:scale-125 hover:rotate-6"><a href="{% url 'profile' %}">Your Profile</a></li>
+            <li class="list-none hover:scale-125 hover:rotate-6"><a href="{% url 'post-create' %}">Create Post</a></li>
+            <li class="list-none hover:scale-125 hover:rotate-6"><a href="{% url 'logout' %}">Log Out</a></li>
+            {% else %}
+            <li class="list-none hover:scale-125 hover:rotate-6"><a href="{% url 'login' %}">Log In</a></li>
+            <li class="list-none hover:scale-125 hover:rotate-6"><a href="{% url 'register' %}">Sign Up</a></li>
+            {% endif %}
+        </div>
+      </nav>
+      <div class="relative m-auto sm:w-[500px] scrollbar-hide " style="z-index:1; overflow-y: auto; max-height: 85vh;">
+        {% if messages %}
+        
+          {% for message in messages %}
+          <div id="popup" class="bg-blue-100 border-t border-b px-4 py-3" role="alert">
+            <p class="font-bold border-blue-500 text-blue-700">{{message.tags}}</p>
+            <p class="text-sm text-black">{{message}}</p>
+          </div>
+          {% endfor %}
+        {% endif %}
+        {% block content %} {% endblock content %}
+      </div>
+    </div>
+    <script src=" {% static 'vanilla-tilt.js' %} "></script>
+    <script type="text/javascript">
+      VanillaTilt.init(document.querySelector(".main"), {
+        max: 25,
+        speed: 400,
+        glare:true,
+        "max-glare":0.5,
+      });
+      
+      //It also supports NodeList
+      VanillaTilt.init(document.querySelectorAll(".main"));
+      const popup = document.getElementById('popup');
+      popup.classList.add('opacity-100', 'visible');
+
+      // Hide the pop-up after 3 seconds
+      setTimeout(() => {
+        popup.classList.remove('opacity-100', 'visible');
+      }, 3000);
+    </script>
+    {% block scripts %} {% endblock scripts %}
+  </body>
+</html>

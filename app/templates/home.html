@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title%}Blawgs{% endblock title%}
+
+{% block content %}
+    <div class="m-4">
+        {% for post in posts %}
+        <div class="main glass w-[100%]" style="margin-top:8px">
+            <div class="title text-black p-9">
+                <div class="flex items-center">
+                    <img class="rounded m-2" style="height:50px" src="{{post.author.profile.image.url}}" alt="">
+                    <p class="text-2xl text-purple-400">
+                        <a href="{% url 'post-detail' post.id %}" class="hover:text-lime-400">  {{post.title}}   </a>
+                    </p>
+                </div>
+                <div class="flex justify-between">
+                    <p class="text-xs text-cyan-300"> 
+                        
+                        <a class="hover:underline" href="{% url 'user-post' post.author.username %}">
+                        @{{post.author}}
+                        </a>
+                    </p>
+                    <p class="text-xs text-lime-400" >{{post.date_posted | date:"F d, Y"}}</p>
+                </div>
+                <hr>
+                <p class="post-content">{{post.content|truncatewords:50}}</p>
+                {% if post.content|wordcount > 50  %}
+                <button id="read-more-btn" class="relative inline-flex  items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="relative px-2 py-1 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                        <a href="{% url 'post-detail' post.id %}">
+                            Read More
+                        </a>
+                    </span>
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if is_paginated %}
+            {% if page_obj.has_previous %}
+                <a class="" href="?page=1"> 1st </a>    
+                <a class="" href="?page={{page_obj.previous_page_number}}"> < </a>    
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a class="" href="?page={{page_obj.next_page_number}}"> > </a>    
+                <a class="" href="?page={{page_obj.paginator.num_pages}}"> Last </a>    
+            {% endif %}
+        {% endif %}
+
+    </div>
+    
+{% endblock content %}
+
